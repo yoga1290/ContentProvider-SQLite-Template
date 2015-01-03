@@ -32,12 +32,18 @@
     <div class="container-fluid" ng-controller="objCtrl">
 
 	    <div class="row">
-	 	   <div class="panel panel-default">
+	    <div class="col-md-12" align="center">
+	 	   <div  class="panel panel-default col-md-3">
 				<div class="panel-body">
-					<div class="row col-md-5">
+					
 						<input type="text" class="form-control col-ms-2" placeholder="Authority" ng-model="authority">
 						<input type="text" class="form-control col-ms-2" placeholder="Database Name" ng-model="databaseName">
 					</div>
+					<!-- Place this tag where you want the button to render. -->
+<a class="github-button" href="https://github.com/yoga1290/ContentProvider-SQLite-Template" data-icon="octicon-star" data-style="mega" data-count-href="/yoga1290/ContentProvider-SQLite-Template/stargazers" data-count-api="/repos/yoga1290/ContentProvider-SQLite-Template#stargazers_count">Star</a>
+<!-- Place this tag right after the last button or just before your close body tag. -->
+<!-- Place this tag where you want the button to render. -->
+<a class="github-button" href="https://github.com/yoga1290" data-style="mega" data-count-href="/yoga1290/followers" data-count-api="/users/yoga1290#followers">Follow @yoga1290</a>
 				</div>
 			</div>
 
@@ -104,6 +110,10 @@
 
 <ul class="nav nav-tabs" role="tablist">
 
+	<li ng-class="{active:selectedTab==-2}">
+  		<a href="#" ng-click="selectedTab=-2">
+  		<h4><span class="glyphicon glyphicon-file"></span>AndroidManifest.xml</h4></a>
+  	</li>
 	<li ng-class="{active:selectedTab==-1}">
   		<a href="#" ng-click="selectedTab=-1">
   		<h4><span class="glyphicon glyphicon-file"></span>ContentProvider</h4></a>
@@ -111,7 +121,7 @@
 
 	<li ng-repeat="table in tables" ng-class="{active:$index==selectedTab }">
   	<a href="#" ng-click="setSelectedTab($index);">
-  		<h4><span class="glyphicon glyphicon-file"></span>{{table.name}}.class</h4></a>
+  		<h4><span class="glyphicon glyphicon-file"></span>{{table.name}}</h4></a>
   </li>
 
 </ul>
@@ -254,16 +264,30 @@ public class ContentProvider extends android.content.ContentProvider {
     }
 }</textarea> <!-- textarea -->
 
+<textarea class="form-control"  rows="46" ng-show="selectedTab==-2">
+<provider
+	android:name="{{authority}}.ContentProvider"
+	android:authorities="{{authority}}"
+	android:label="sync_label"
+	android:enabled="true"
+	android:syncable="true"
+	android:exported="false" >
+</provider>
+</textarea>
+
 
 		</div> <!-- .panel-body -->
 		</div> <!-- .panel -->
 
 		</div> <!-- .col -->
 
+
+
+
 		</div> <!-- .row -->
 
 	</div> <!-- .container -->
-
+<script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
 	<script>
 	angular.module('app',[]);
 
@@ -293,6 +317,7 @@ public class ContentProvider extends android.content.ContentProvider {
 				};
 				sp.onFieldKeyPress=function(e,table){
 					if(e.keyCode==13)
+					{
 						table.fields.push({
 										name:'',
 										type:'TEXT',
@@ -300,9 +325,12 @@ public class ContentProvider extends android.content.ContentProvider {
 										isAutoincrement:false,
 										isNotNull:false
 									});
+						$('input[type=text]').last().focus();
+					}
 				};
 				sp.onTableKeyPress=function(e){
 					if(e.keyCode==13)
+					{
 						$scope.tables.push({
 										name:'',
 										fields:[
@@ -315,6 +343,8 @@ public class ContentProvider extends android.content.ContentProvider {
 											}
 										]
 									});
+						$('input[type=text]').last().focus();
+					}
 				};
 				sp.removeField=function(table,index){
 					var nFields=[];
